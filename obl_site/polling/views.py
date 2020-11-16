@@ -4,7 +4,7 @@ from polling.models import Poll
 
 def list_view(request):
     context = {'polls': Poll.objects.all()}
-    return render(request, 'list.html', context)
+    return render(request, 'polling/list.html', context)
 
 def detail_view(request, poll_id):
     try:
@@ -20,4 +20,4 @@ def detail_view(request, poll_id):
         poll.save()
 
     context = {'poll': poll}
-    return render(request, 'detail.html', context)
+    return render(request, 'polling/detail.html', context)
