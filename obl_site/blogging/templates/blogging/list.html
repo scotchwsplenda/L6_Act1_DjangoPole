@@ -1,9 +1,10 @@
 {% extends "base.html" %}{% block content %}
   <h1>Recent Posts</h1>
-  {% comment %} here is where the query happens {% endcomment %}
+  {% comment %} below is where the query happens {% endcomment %}
   {% for post in posts %}
   <div class="post">
-    <h2>{{ post }}</h2>
+  {% comment %} here is where the link happens CRAZY note no comma after view{% endcomment %}
+    <h2><a href="{% url 'blog_detail' post.pk %}">{{ post }}</a></h2> 
     <p class="byline">
       Posted by {{ post.author.username }} &mdash; {{ post.published_date }}
     </p>
@@ -20,3 +21,4 @@
   </div>
   {% endfor %}
 {% endblock %}
+

@@ -13,7 +13,6 @@ def stub_view(request, *args, **kwargs):
         body += "\n".join(["\t%s: %s" % i for i in kwargs.items()])
     return HttpResponse(body, content_type="text/plain")
 
-
 '''
 def list_view(request):
     published = Post.objects.exclude(published_date__exact=None)
@@ -26,6 +25,18 @@ def list_view(request):
 def list_view(request):
     published = Post.objects.exclude(published_date__exact=None)#query that retrieves data
     posts = published.order_by('-published_date') #order data
-    context = {'posts': posts} #vlookup
+    context = {'posts': posts} #vlookup / madlibs
     return render(request, 'blogging/list.html', context)
     # render(someone hit enter, HTML to inject it into, vlookup column)
+
+def detail_view(request, post_id):
+    published = Post.objects.exclude(published_date__exact=None)
+    try:
+        post = published.get(pk=post_id) #pk is a builtin (primary key, int) column in the model
+    except Post.DoesNotExist:
+        raise Http404
+    context = {'post': post}
+    return render(request, 'blogging/detail.html', context)
+
+
+    
