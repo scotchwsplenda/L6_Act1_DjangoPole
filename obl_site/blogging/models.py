@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib import admin
 
 class Post(models.Model):
     title = models.CharField(max_length=128)
@@ -21,3 +22,9 @@ class Category(models.Model):
         return self.name
     class Meta:
         verbose_name_plural = 'CategorieZZZ'
+       
+# https://docs.djangoproject.com/en/2.1/ref/contrib/admin/#working-with-many-to-many-models
+
+class CategoryInLine(admin.TabularInline):
+    model = Category.posts.through
+
