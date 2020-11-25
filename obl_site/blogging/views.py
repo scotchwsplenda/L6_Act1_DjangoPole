@@ -1,10 +1,30 @@
-from django.shortcuts import render
+from django.http import request
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from blogging.models import Post, Category
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework import permissions
 from .serializers import UserSerializer, GroupSerializer, PostsSerializer, CategorySerializer
+from django import forms
+from .forms import MyPostForm
+from django.utils import timezone
+
+def Form_post(request):
+    if request.method == "POST":
+        form = MyPostForm(request.POST)
+        if form.is_valid():
+            title = form['title']
+            text = form['text']
+            author = form['author']
+            # model_instance.timestamp = timezone.now()
+            form.save()
+            return redirect('/')
+    else:
+ 
+        form = MyPostForm()
+ 
+        return render(request, "blogging/my_template.html", {'form': form})
 
 
 class UserViewSet(viewsets.ModelViewSet):
