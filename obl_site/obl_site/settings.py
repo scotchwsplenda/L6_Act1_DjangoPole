@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'polling',
     'blogging',
-    'goofin'
+    'goofin',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
