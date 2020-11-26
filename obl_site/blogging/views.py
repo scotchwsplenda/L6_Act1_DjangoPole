@@ -7,24 +7,21 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from .serializers import UserSerializer, GroupSerializer, PostsSerializer, CategorySerializer
 from django import forms
-from .forms import MyPostForm
-from django.utils import timezone
+from .forms import PostForm
+from datetime import datetime
 
 def Form_post(request):
+    
+    form = PostForm(initial = {'published_date': datetime.now()})
+
     if request.method == "POST":
-        form = MyPostForm(request.POST)
+        form = PostForm(request.POST)
         if form.is_valid():
-            title = form['title']
-            text = form['text']
-            author = form['author']
-            # model_instance.timestamp = timezone.now()
+            print(request.POST)
             form.save()
             return redirect('/')
-    else:
- 
-        form = MyPostForm()
- 
-        return render(request, "blogging/my_template.html", {'form': form})
+
+    return render(request, "blogging/my_template.html", {'form': form})
 
 
 class UserViewSet(viewsets.ModelViewSet):
